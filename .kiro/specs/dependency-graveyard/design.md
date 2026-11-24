@@ -20,6 +20,7 @@ The approved requirements live in `requirements.md`. This document describes the
 src/
   main.tsx                  # bootstrap
   App.tsx                   # top-level state machine
+  analyze.ts                # analyzePackage: classify -> registry -> resolve -> OSV -> verdict
   types.ts                  # domain types (DependencyInput, RegistryInfo, Vulnerability, Verdict, ...)
   config.ts                 # thresholds, concurrency, timeouts (single config object)
   core/
@@ -149,12 +150,42 @@ A separate `verdictReasons(input, verdict)` produces the epitaph text as an arra
 - The response's `vulns[].summary` strings are shown in the epitaph's vulnerability list, each linked to the advisory (OSV `id` link or `references[].url`).
 - Failure policy (accepted): FR-2.3's "failed lookup marks that package UNKNOWN" applies to the registry lookup, which is the primary source. A failed OSV query affects only vulnerability data, so the package gets an empty vulnerability list plus a "vulnerability check unavailable" note in the epitaph rather than an UNKNOWN verdict. This keeps an OSV outage from degrading every package to UNKNOWN.
 
-### Orchestration (App.tsx)
+### Orchestration (analyzePackage)
 
-1. Parse input → `DependencyInput[]` or inline error.
-2. Build one task per package. Inside a task, run sequentially: registry fetch → version resolution → OSV query (only when a version resolved). The verdict is computed once, after both lookups finish, so a grave never flips from ALIVE to DYING after being shown.
-3. Run the tasks through the pool (limit 6). Each finished task emits its complete `PackageReport`; the grave renders once, already final. Graves appear in completion order while pending slots show the "digging..." placeholder, then settle into a stable sorted order (DEAD, DYING, UNKNOWN, ALIVE, then alphabetical) once all tasks complete.
-4. Progress: `X of N checked` counts completed tasks (registry + OSV both done).
+The whole per-package flow lives in one function, `src/analyze.ts`:
+`analyzePackage(input, { fetchFn?, now? })` — classify → (if the specifier is
+resolvable-by-classification: registry fetch → version resolution → OSV
+query) → verdict → reasons. It is shared by `App.tsx` and
+`scripts/check-sample.ts`, so the script and the UI can never disagree
+about the pipeline. It never throws for per-package failures; failures
+become part of the returned `PackageReport`.
+
+Flow inside `analyzePackage`:
+
+1. Classify the raw specifier. If it is unresolvable by classification
+   (git/tarball/file URL, `link:`/`workspace:`/`npm:` protocol), return
+   UNKNOWN immediately: no registry or OSV request at all, `registry: null`,
+   so the epitaph shows no latest version or last publish date (FR-2.1, FR-3.3).
+2. Otherwise fetch the registry. 404/timeout/network failure → UNKNOWN
+   with the lookup error; no OSV request.
+3. Resolve the specifier against the registry document. Resolution failure
+   (`no satisfying version`, `unknown dist-tag`) → UNKNOWN; the fetched
+   registry data is kept in the report.
+4. Query OSV for the resolved version. A failed OSV query (including
+   timeout) does not change the verdict: the report keeps an empty
+   vulnerability list and `vulnCheckUnavailable: true`, shown as a
+   "vulnerability check unavailable" note in the epitaph (accepted policy).
+5. Compute the verdict once with the injected `now` and collect every
+   applicable reason, so a grave never flips from ALIVE to DYING after
+   being shown.
+
+`App.tsx` builds one `analyzePackage` call per dependency and runs them
+through the pool (limit 6). Each finished call emits its complete
+`PackageReport`; the grave renders once, already final. Graves appear in
+completion order while pending slots show the "digging..." placeholder,
+then settle into a stable sorted order (DEAD, DYING, UNKNOWN, ALIVE, then
+alphabetical) once all tasks complete. Progress: `X of N checked` counts
+completed tasks (registry + OSV both done, or skipped-lookup UNKNOWNs).
 
 ## UI Design
 
@@ -176,7 +207,7 @@ Single screen, three vertical zones; a full-viewport spooky scene.
   - the package name (truncated with title attribute),
   - a text verdict label ("dead", "dying", "alive", "unknown"),
   - artwork delivered as inline SVG components (no image sprites) so shapes are accessible and stylable.
-- `Epitaph`: modal dialog (`role="dialog"`, `aria-modal`), focus moves into it on open, Escape closes, focus returns to the triggering grave. Content: package name, installed range, resolved version, latest version, last publish date, vulnerability count with links (each OSV finding shows its advisory `summary` linked to the advisory URL), deprecation message, "upgrade available" note, UNKNOWN reason. Rendered as a weathered stone tablet.
+- `Epitaph`: modal dialog (`role="dialog"`, `aria-modal`), focus moves into it on open, Escape closes, focus returns to the triggering grave. Content: package name, installed range, resolved version, latest version and last publish date (only when registry data exists; unresolvable specifiers carry none, FR-2.1), vulnerability count with links (each OSV finding shows its advisory `summary` linked to the advisory URL), deprecation message, "upgrade available" note, UNKNOWN reason. Rendered as a weathered stone tablet.
 
 ### Incremental rendering
 
@@ -219,7 +250,7 @@ Rationale:
 - `lodash` pinned to exact `4.17.15`: this version has 5 known vulnerabilities in OSV → `DYING` (stable, independent of publish age).
 - `ghost-town` via `github:` URL → `UNKNOWN` (git url).
 
-Because verdicts drift as packages publish or deprecate over time, the sample is verified by a script. `scripts/check-sample.mjs` runs the same core logic in Node (reusing `core/resolveVersion` and `core/verdict` plus direct fetches) against the live registry and OSV, and fails if any of the four verdicts is missing. It is wired as `npm run check-sample` and intended to be run before a demo and in CI on a schedule-independent best-effort basis (not part of the unit test suite, since it hits the network).
+Because verdicts drift as packages publish or deprecate over time, the sample is verified by a script. `scripts/check-sample.ts` (run via `npm run check-sample`, using `tsx`) runs the same `analyzePackage` pipeline against the live registry and OSV, and fails if any of the four verdicts is missing. It is intended to be run before a demo; it is not part of the unit test suite, since it hits the network. Unresolvable specifiers are reported without registry data (no latest or last-publish line).
 
 ## Error handling
 

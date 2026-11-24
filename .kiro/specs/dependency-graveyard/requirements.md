@@ -31,6 +31,7 @@ Dependency Graveyard is a static single-page web app (TypeScript + React + Vite,
 - FR-2.1: For every entry in `dependencies` and `devDependencies` (including scoped packages such as `@scope/name`), the app fetches from the browser:
   - npm registry (`https://registry.npmjs.org/<name>`): `dist-tags.latest`, the `time` object, per-version deprecation flags, and the list of published versions.
   - OSV vulnerability database (single-package `POST https://api.osv.dev/v1/query`): known vulnerabilities for the resolved version; each finding's `summary` is shown in the epitaph, linked to the advisory.
+  - A dependency whose specifier is unresolvable by classification (FR-3.3: git/tarball/file URLs, `link:`/`workspace:`/`npm:` protocols) is not looked up at all: no registry or OSV request is made, its report carries no registry data, and it is `UNKNOWN`.
 - FR-2.2: All lookups run with limited concurrency, fixed at a default of 6 concurrent requests. Each request has a 10-second timeout.
 - FR-2.3: If a single package lookup fails (network error, HTTP error, timeout), that package is marked `UNKNOWN` and the remaining packages are unaffected.
 - FR-2.4: A package not found on the npm registry (HTTP 404, including private packages) is `UNKNOWN` with the reason "not found on npm".
@@ -57,7 +58,7 @@ Dependency Graveyard is a static single-page web app (TypeScript + React + Vite,
 ### FR-5: Graveyard view
 
 - FR-5.1: The graveyard shows one grave per dependency: `DEAD` = tombstone, `DYING` = ghost, `ALIVE` = tree, `UNKNOWN` = a distinct marker (e.g. fog-shrouded grave).
-- FR-5.2: Clicking (or activating via keyboard) a grave opens an epitaph detail view showing: package name, installed version range, resolved version, latest version, last publish date, vulnerability count with links to OSV entries (showing each finding's `summary`), the deprecation message if any, an "upgrade available" note when only the resolved version is deprecated (FR-4.3, kept even when other reasons also apply), and every applicable reason when the verdict is `UNKNOWN` (FR-3.3, FR-2.4). A DYING verdict lists all applicable reasons (age, vulnerabilities, resolved-only deprecation).
+- FR-5.2: Clicking (or activating via keyboard) a grave opens an epitaph detail view showing: package name, installed version range, resolved version, latest version, last publish date, vulnerability count with links to OSV entries (showing each finding's `summary`), the deprecation message if any, an "upgrade available" note when only the resolved version is deprecated (FR-4.3, kept even when other reasons also apply), and every applicable reason when the verdict is `UNKNOWN` (FR-3.3, FR-2.4). A DYING verdict lists all applicable reasons (age, vulnerabilities, resolved-only deprecation). Latest version and last publish date are not shown when no registry data exists (unresolvable specifier, FR-2.1).
 - FR-5.3: The epitaph is reachable by keyboard and dismissible with Escape.
 
 ### FR-6: Summary
