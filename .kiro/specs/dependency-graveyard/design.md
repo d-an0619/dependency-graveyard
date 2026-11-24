@@ -134,7 +134,7 @@ A separate `verdictReason(input, verdict)` produces the epitaph text, e.g. "no p
 
 ### pool.ts
 
-`runWithConcurrency(tasks: Task[], limit: 6)` returning results as they settle via async iterator or callback. Each task is wrapped in a 10-second `AbortController` timeout; a timeout resolves that task as an error, not a rejection of the whole pool.
+`runWithConcurrency(tasks: Task[], limit: 6)` returning results as they settle via async iterator or callback. Timeouts are applied per fetch request, not per task: each underlying `fetch` (registry request, OSV request) gets its own 10-second `AbortController` deadline. A registry timeout resolves that package as `UNKNOWN` ("lookup timed out"). An OSV timeout follows the accepted OSV failure policy: an empty vulnerability list plus a "vulnerability check unavailable" note in the epitaph; the verdict is not UNKNOWN. A timeout resolves as an error for that request, never a rejection of the whole pool.
 
 ### registry.ts
 
