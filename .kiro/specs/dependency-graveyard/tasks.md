@@ -2,14 +2,14 @@
 
 ## 1. Project scaffold
 
-- [ ] 1.1 Initialize the repo as a Vite + React + TypeScript project, adapted for an existing directory. The existing `README.md`, `LICENSE`, and `.kiro/` directory must be preserved, never overwritten or removed, and `.kiro/` must not be gitignored. _Requirements: NFR-1, NFR-4_
-- [ ] 1.2 Install runtime deps: `semver`. Install dev deps: `vitest`, `fast-check`, `@testing-library/react`, `@testing-library/user-event`, `jsdom`. _Requirements: NFR-1, NFR-2_
-- [ ] 1.3 Configure Vitest (jsdom environment, `src/**` test glob) and add npm scripts: `dev`, `build`, `test`, `check-sample`. _Requirements: NFR-1, NFR-2_
-- [ ] 1.4 Set `base: '/dependency-graveyard/'` in `vite.config.ts`. _Requirements: NFR-1_
+- [x] 1.1 Initialize the repo as a Vite + React + TypeScript project, adapted for an existing directory. The existing `README.md`, `LICENSE`, and `.kiro/` directory must be preserved, never overwritten or removed, and `.kiro/` must not be gitignored. _Requirements: NFR-1, NFR-4_
+- [x] 1.2 Install runtime deps: `semver`. Install dev deps: `vitest`, `fast-check`, `@testing-library/react`, `@testing-library/user-event`, `jsdom`. _Requirements: NFR-1, NFR-2_
+- [x] 1.3 Configure Vitest (jsdom environment, `src/**` test glob) and add npm scripts: `dev`, `build`, `test`, `check-sample`. _Requirements: NFR-1, NFR-2_
+- [x] 1.4 Set `base: '/dependency-graveyard/'` in `vite.config.ts`. _Requirements: NFR-1_
 
 ## 2. Early deployment (baseline)
 
-- [ ] 2.1 Add `.github/workflows/deploy.yml`: on push to `main`, run `npm test` first, then `npm ci && npm run build`, and deploy `dist/` via GitHub Pages actions (source is already set to GitHub Actions in the repo settings). A failing test run must block the deploy. _Requirements: NFR-1_
+- [x] 2.1 Add `.github/workflows/deploy.yml`: on push to `main`, run `npm test` first, then `npm ci && npm run build`, and deploy `dist/` via GitHub Pages actions (source is already set to GitHub Actions in the repo settings). A failing test run must block the deploy. _Requirements: NFR-1_
 - [ ] 2.2 Deploy the default Vite welcome screen to GitHub Pages, confirm the page is served at the `/dependency-graveyard/` base path, and keep this pipeline green before building the rest of the app. _Requirements: NFR-1_
 
 ## 3. Core: types and config
