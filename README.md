@@ -1,6 +1,9 @@
-# kiroween-2026
+# Dependency Graveyard
 
-Kiroween 2026 해커톤(Devpost, AWS Kiro) 출품작.
+Kiroween 2026 해커톤(Devpost, AWS Kiro) 출품작. 카테고리: Costume Contest.
+
+`package.json` 을 붙여넣으면 버려졌거나 deprecated 됐거나 취약한 의존성이 묘지의 비석으로 나타난다.
+데이터: npm registry, deps.dev, OSV (모두 브라우저에서 직접 호출, 서버 없음).
 
 - 규칙: https://kiroween.devpost.com/rules
 - 마감: 2026-12-04 14:00 PT (한국 12/5 토 07:00)
