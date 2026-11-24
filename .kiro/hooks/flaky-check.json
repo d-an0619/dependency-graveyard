@@ -1,0 +1,15 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "flaky-check",
+      "description": "Run the full test suite 10 times in a row and print the number of failing runs (flakiness check).",
+      "trigger": "Manual",
+      "action": {
+        "type": "command",
+        "command": "fails=0; for i in 1 2 3 4 5 6 7 8 9 10; do echo \"--- run $i/10 ---\"; npm test >/dev/null 2>&1 || fails=$((fails+1)); done; echo \"failed $fails of 10 runs\"; exit 0"
+      },
+      "timeout": 900
+    }
+  ]
+}

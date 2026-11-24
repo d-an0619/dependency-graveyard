@@ -1,0 +1,15 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "spec-drift-check",
+      "description": "When requirements.md is saved, check design.md and tasks.md for drift. Report only; never edit.",
+      "trigger": "PostFileSave",
+      "matcher": "(^|/)\\.kiro/specs/.*/requirements\\.md$",
+      "action": {
+        "type": "agent",
+        "prompt": "The requirements document (.kiro/specs/dependency-graveyard/requirements.md) was just changed. Read design.md and tasks.md in the same spec directory and find FR numbers or sentences that conflict with, or are now inconsistent with, this change. Report them as a list with the conflicting FR number and a short quote from each file. Do not fix anything yourself; do not modify any files."
+      }
+    }
+  ]
+}

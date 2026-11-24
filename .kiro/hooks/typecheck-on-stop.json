@@ -1,0 +1,15 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "typecheck-on-stop",
+      "description": "Type-check the whole project with tsc when the agent finishes its turn.",
+      "trigger": "Stop",
+      "action": {
+        "type": "command",
+        "command": "npx tsc --noEmit"
+      },
+      "timeout": 120
+    }
+  ]
+}
