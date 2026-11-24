@@ -1,0 +1,16 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "tests-on-save",
+      "description": "Run the full test suite whenever any src TypeScript file is saved.",
+      "trigger": "PostFileSave",
+      "matcher": "(^|/)src/.*\\.(ts|tsx)$",
+      "action": {
+        "type": "command",
+        "command": "npx vitest run"
+      },
+      "timeout": 120
+    }
+  ]
+}
