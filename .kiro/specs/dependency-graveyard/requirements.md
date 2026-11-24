@@ -30,7 +30,7 @@ Dependency Graveyard is a static single-page web app (TypeScript + React + Vite,
 
 - FR-2.1: For every entry in `dependencies` and `devDependencies` (including scoped packages such as `@scope/name`), the app fetches from the browser:
   - npm registry (`https://registry.npmjs.org/<name>`): `dist-tags.latest`, the `time` object, per-version deprecation flags, and the list of published versions.
-  - OSV vulnerability database (`POST https://api.osv.dev/v1/querybatch`): known vulnerabilities for the resolved version.
+  - OSV vulnerability database (single-package `POST https://api.osv.dev/v1/query`): known vulnerabilities for the resolved version; each finding's `summary` is shown in the epitaph, linked to the advisory.
 - FR-2.2: All lookups run with limited concurrency, fixed at a default of 6 concurrent requests. Each request has a 10-second timeout.
 - FR-2.3: If a single package lookup fails (network error, HTTP error, timeout), that package is marked `UNKNOWN` and the remaining packages are unaffected.
 - FR-2.4: A package not found on the npm registry (HTTP 404, including private packages) is `UNKNOWN` with the reason "not found on npm".
@@ -40,7 +40,7 @@ Dependency Graveyard is a static single-page web app (TypeScript + React + Vite,
 
 - FR-3.1: If the version specifier is a semver range (e.g. `^1.2.3`, `~2.0.0`, `1.2.3`, `>=1 <3`), the resolved version is the highest published version in the registry's `versions` list that satisfies the range.
 - FR-3.2: If the specifier is a dist-tag (e.g. `latest`, `next`), the resolved version is the version that tag points to.
-- FR-3.3: Git URLs, file URLs, `link:`/`workspace:` protocols, `npm:` aliases, and ranges that no published version satisfies are unresolvable; the package is `UNKNOWN` and the epitaph states the reason.
+- FR-3.3: Git URLs, tarball URLs (`https://.../x.tgz`), file URLs, `link:`/`workspace:` protocols, `npm:` aliases, and ranges that no published version satisfies are unresolvable; the package is `UNKNOWN` and the epitaph states the reason.
 
 ### FR-4: Verdict classification
 
@@ -57,7 +57,7 @@ Dependency Graveyard is a static single-page web app (TypeScript + React + Vite,
 ### FR-5: Graveyard view
 
 - FR-5.1: The graveyard shows one grave per dependency: `DEAD` = tombstone, `DYING` = ghost, `ALIVE` = tree, `UNKNOWN` = a distinct marker (e.g. fog-shrouded grave).
-- FR-5.2: Clicking (or activating via keyboard) a grave opens an epitaph detail view showing: package name, installed version range, resolved version, latest version, last publish date, vulnerability count with links to OSV entries, the deprecation message if any, an "upgrade available" note when only the resolved version is deprecated (FR-4.3), and the reason when the verdict is `UNKNOWN` (FR-3.3, FR-2.4).
+- FR-5.2: Clicking (or activating via keyboard) a grave opens an epitaph detail view showing: package name, installed version range, resolved version, latest version, last publish date, vulnerability count with links to OSV entries (showing each finding's `summary`), the deprecation message if any, an "upgrade available" note when only the resolved version is deprecated (FR-4.3), and the reason when the verdict is `UNKNOWN` (FR-3.3, FR-2.4).
 - FR-5.3: The epitaph is reachable by keyboard and dismissible with Escape.
 
 ### FR-6: Summary
