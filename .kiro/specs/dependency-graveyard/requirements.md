@@ -57,7 +57,7 @@ Dependency Graveyard is a static single-page web app (TypeScript + React + Vite,
 ### FR-5: Graveyard view
 
 - FR-5.1: The graveyard shows one grave per dependency: `DEAD` = tombstone, `DYING` = ghost, `ALIVE` = tree, `UNKNOWN` = a distinct marker (e.g. fog-shrouded grave).
-- FR-5.2: Clicking (or activating via keyboard) a grave opens an epitaph detail view showing: package name, installed version range, resolved version, latest version, last publish date, vulnerability count with links to OSV entries (showing each finding's `summary`), the deprecation message if any, an "upgrade available" note when only the resolved version is deprecated (FR-4.3), and the reason when the verdict is `UNKNOWN` (FR-3.3, FR-2.4).
+- FR-5.2: Clicking (or activating via keyboard) a grave opens an epitaph detail view showing: package name, installed version range, resolved version, latest version, last publish date, vulnerability count with links to OSV entries (showing each finding's `summary`), the deprecation message if any, an "upgrade available" note when only the resolved version is deprecated (FR-4.3, kept even when other reasons also apply), and every applicable reason when the verdict is `UNKNOWN` (FR-3.3, FR-2.4). A DYING verdict lists all applicable reasons (age, vulnerabilities, resolved-only deprecation).
 - FR-5.3: The epitaph is reachable by keyboard and dismissible with Escape.
 
 ### FR-6: Summary

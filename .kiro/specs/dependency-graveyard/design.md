@@ -128,7 +128,7 @@ export const CONFIG = {
 
 Boundary rule: age `>= dyingMs` (i.e. exactly one 365-day year, to the millisecond) → eligible for DYING; age `>= deadMs` (exactly three 365-day years) → DEAD. Tests pin these with fixed dates.
 
-A separate `verdictReason(input, verdict)` produces the epitaph text, e.g. "no publish in 3 years", "deprecated: <message>", "resolved version has 2 known vulnerabilities", "not found on npm", "git URL cannot be resolved".
+A separate `verdictReasons(input, verdict)` produces the epitaph text as an array of every applicable reason (e.g. "no publish in 3 years", "deprecated: <message>", "resolved version has 2 known vulnerabilities", "not found on npm", "git URL cannot be resolved"). A DYING verdict can carry several reasons at once (age, vulnerabilities, resolved-only deprecation); the "upgrade available" note is always kept when the resolved version is deprecated while the latest is not.
 
 ## I/O Layer
 

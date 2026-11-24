@@ -10,32 +10,32 @@
 ## 2. Early deployment (baseline)
 
 - [x] 2.1 Add `.github/workflows/deploy.yml`: on push to `main`, run `npm test` first, then `npm ci && npm run build`, and deploy `dist/` via GitHub Pages actions (source is already set to GitHub Actions in the repo settings). A failing test run must block the deploy. _Requirements: NFR-1_
-- [ ] 2.2 Deploy the default Vite welcome screen to GitHub Pages, confirm the page is served at the `/dependency-graveyard/` base path, and keep this pipeline green before building the rest of the app. _Requirements: NFR-1_
+- [x] 2.2 Deploy the default Vite welcome screen to GitHub Pages, confirm the page is served at the `/dependency-graveyard/` base path, and keep this pipeline green before building the rest of the app. _Requirements: NFR-1_
 
 ## 3. Core: types and config
 
-- [ ] 3.1 Create `src/types.ts` with the domain model: `Verdict`, `UnresolvableReason`, `Specifier`, `DependencyInput`, `RegistryInfo`, `Vulnerability`, `PackageReport`. _Requirements: FR-4.1, NFR-1_
-- [ ] 3.2 Create `src/config.ts` with `YEAR_MS` (365-day fixed year), `dyingMs`, `deadMs`, `concurrency: 6`, `requestTimeoutMs: 10_000`, `registryUrl`, `osvQueryUrl`. _Requirements: FR-4.7, FR-2.2_
+- [x] 3.1 Create `src/types.ts` with the domain model: `Verdict`, `UnresolvableReason`, `Specifier`, `DependencyInput`, `RegistryInfo`, `Vulnerability`, `PackageReport`. _Requirements: FR-4.1, NFR-1_
+- [x] 3.2 Create `src/config.ts` with `YEAR_MS` (365-day fixed year), `dyingMs`, `deadMs`, `concurrency: 6`, `requestTimeoutMs: 10_000`, `registryUrl`, `osvQueryUrl`. _Requirements: FR-4.7, FR-2.2_
 
 ## 4. Core: parse
 
-- [ ] 4.1 Implement `core/parsePackageJson.ts`: JSON parse with friendly error (including position), require non-empty `dependencies`/`devDependencies`, union with devDependencies overriding duplicates, stable order (dependencies first). _Requirements: FR-1.1, FR-1.3_
-- [ ] 4.2 Unit tests: valid input, invalid JSON, no dependencies, both maps, duplicate names. _Requirements: FR-1.3, NFR-2_
+- [x] 4.1 Implement `core/parsePackageJson.ts`: JSON parse with friendly error (including position), require non-empty `dependencies`/`devDependencies`, union with devDependencies overriding duplicates, stable order (dependencies first). _Requirements: FR-1.1, FR-1.3_
+- [x] 4.2 Unit tests: valid input, invalid JSON, no dependencies, both maps, duplicate names. _Requirements: FR-1.3, NFR-2_
 
 ## 5. Core: specifier classification and version resolution
 
-- [ ] 5.1 Implement `core/resolveVersion.ts`: classify raw specifier (git url, tarball url, file url, link/workspace, npm alias, dist-tag, semver range), then resolve: `semver.maxSatisfying` for ranges, `dist-tags[tag]` for tags, with `no satisfying version` / `unknown dist-tag` outcomes. _Requirements: FR-3.1, FR-3.2, FR-3.3_
-- [ ] 5.2 Property-based tests (fast-check): ranges (`^`, `~`, exact, compound ranges) resolve to the highest satisfying published version; git/tarball/file/link/workspace/npm-alias specifiers return the correct reason; unsatisfiable ranges and unknown dist-tags return correct reasons; dist-tags resolve via the tag map. _Requirements: FR-3.1, FR-3.2, FR-3.3, NFR-2_
+- [x] 5.1 Implement `core/resolveVersion.ts`: classify raw specifier (git url, tarball url, file url, link/workspace, npm alias, dist-tag, semver range), then resolve: `semver.maxSatisfying` for ranges, `dist-tags[tag]` for tags, with `no satisfying version` / `unknown dist-tag` outcomes. _Requirements: FR-3.1, FR-3.2, FR-3.3_
+- [x] 5.2 Property-based tests (fast-check): ranges (`^`, `~`, exact, compound ranges) resolve to the highest satisfying published version; git/tarball/file/link/workspace/npm-alias specifiers return the correct reason; unsatisfiable ranges and unknown dist-tags return correct reasons; dist-tags resolve via the tag map. _Requirements: FR-3.1, FR-3.2, FR-3.3, NFR-2_
 
 ## 6. Core: verdict
 
-- [ ] 6.1 Implement `core/verdict.ts`: `classifyVerdict(report, now)` (pure, `now` injected) with precedence `UNKNOWN > deprecated(latest) > age>=deadMs > (age>=dyingMs or vulnerabilities or resolved-version deprecated) > ALIVE`; `lastPublish = max(time[version])` excluding `modified`/`created`; plus `verdictReason` producing epitaph text (including "upgrade available" for resolved-only deprecation). _Requirements: FR-4.1, FR-4.2, FR-4.3, FR-4.4, FR-4.5, FR-4.6, FR-4.7_
-- [ ] 6.2 Property-based tests: exact `dyingMs` boundary → DYING, 1ms less → ALIVE; exact `deadMs` → DEAD, 1ms less → not DEAD by age; deprecated latest → DEAD regardless; resolved-only deprecation → DYING never DEAD; vulnerabilities > 0 → at least DYING; lookup error / unresolvable → UNKNOWN regardless; precedence order holds over generated inputs. _Requirements: FR-4.3, FR-4.4, FR-4.5, FR-4.6, NFR-2_
+- [x] 6.1 Implement `core/verdict.ts`: `classifyVerdict(report, now)` (pure, `now` injected) with precedence `UNKNOWN > deprecated(latest) > age>=deadMs > (age>=dyingMs or vulnerabilities or resolved-version deprecated) > ALIVE`; `lastPublish = max(time[version])` excluding `modified`/`created`; plus `verdictReason` producing epitaph text (including "upgrade available" for resolved-only deprecation). _Requirements: FR-4.1, FR-4.2, FR-4.3, FR-4.4, FR-4.5, FR-4.6, FR-4.7_
+- [x] 6.2 Property-based tests: exact `dyingMs` boundary → DYING, 1ms less → ALIVE; exact `deadMs` → DEAD, 1ms less → not DEAD by age; deprecated latest → DEAD regardless; resolved-only deprecation → DYING never DEAD; vulnerabilities > 0 → at least DYING; lookup error / unresolvable → UNKNOWN regardless; precedence order holds over generated inputs. _Requirements: FR-4.3, FR-4.4, FR-4.5, FR-4.6, NFR-2_
 
 ## 7. Core: summary
 
-- [ ] 7.1 Implement `core/summary.ts`: counts and sentence "7 of 42 dependencies are dead, 12 are dying". _Requirements: FR-6.1_
-- [ ] 7.2 Unit tests including 0-dead, all-dead, and mixed cases. _Requirements: FR-6.1, NFR-2_
+- [x] 7.1 Implement `core/summary.ts`: counts and sentence "7 of 42 dependencies are dead, 12 are dying". _Requirements: FR-6.1_
+- [x] 7.2 Unit tests including 0-dead, all-dead, and mixed cases. _Requirements: FR-6.1, NFR-2_
 
 ## 8. I/O layer
 
