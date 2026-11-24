@@ -39,16 +39,16 @@
 
 ## 8. I/O layer
 
-- [ ] 8.1 Implement `io/pool.ts`: `runWithConcurrency` (limit from config, results delivered as they settle). _Requirements: FR-2.2_
-- [ ] 8.2 Implement a fetch wrapper applying a per-request 10s `AbortController` timeout (used by both fetchers). _Requirements: FR-2.2_
-- [ ] 8.3 Implement `io/registry.ts`: full-document GET, URL-encoded names, 404 → "not found on npm", extract `dist-tags`, `time`, per-version deprecations; compute `lastPublish`. _Requirements: FR-2.1, FR-2.4, FR-4.2_
-- [ ] 8.4 Implement `io/osv.ts`: single POST `https://api.osv.dev/v1/query` with `{package: {name, ecosystem: 'npm'}, version}`; map `vulns[]` to `Vulnerability` (id, summary, url); 404 or empty `vulns` → no vulnerabilities; failures and timeouts → `{error}` handled by the accepted OSV policy (note in epitaph, verdict unchanged). _Requirements: FR-2.1, FR-2.2, FR-2.3_
+- [x] 8.1 Implement `io/pool.ts`: `runWithConcurrency` (limit from config, results delivered as they settle). _Requirements: FR-2.2_
+- [x] 8.2 Implement a fetch wrapper applying a per-request 10s `AbortController` timeout (used by both fetchers). _Requirements: FR-2.2_
+- [x] 8.3 Implement `io/registry.ts`: full-document GET, URL-encoded names, 404 → "not found on npm", extract `dist-tags`, `time`, per-version deprecations; compute `lastPublish`. _Requirements: FR-2.1, FR-2.4, FR-4.2_
+- [x] 8.4 Implement `io/osv.ts`: single POST `https://api.osv.dev/v1/query` with `{package: {name, ecosystem: 'npm'}, version}`; map `vulns[]` to `Vulnerability` (id, summary, url); 404 or empty `vulns` → no vulnerabilities; failures and timeouts → `{error}` handled by the accepted OSV policy (note in epitaph, verdict unchanged). _Requirements: FR-2.1, FR-2.2, FR-2.3_
 
 ## 9. Sample data and check script
 
-- [ ] 9.1 Create `sample/example.package.json` per the design (react, moment, @types/node, request, left-pad, colors, lodash@4.17.15 exact, github: URL). _Requirements: FR-1.2_
-- [ ] 9.2 Implement `scripts/check-sample.mjs` (Node, live fetches, reusing core logic): run the full pipeline on the sample and fail if any of ALIVE/DYING/DEAD/UNKNOWN is missing; wire as `npm run check-sample`. _Requirements: FR-1.2, NFR-2_
-- [ ] 9.3 Run `npm run check-sample` against the live registry and adjust the sample until all four verdicts appear. _Requirements: FR-1.2_
+- [x] 9.1 Create `sample/example.package.json` per the design (react, moment, @types/node, request, left-pad, colors, lodash@4.17.15 exact, github: URL). _Requirements: FR-1.2_
+- [x] 9.2 Implement `scripts/check-sample.mjs` (Node, live fetches, reusing core logic): run the full pipeline on the sample and fail if any of ALIVE/DYING/DEAD/UNKNOWN is missing; wire as `npm run check-sample`. _Requirements: FR-1.2, NFR-2_
+- [x] 9.3 Run `npm run check-sample` against the live registry and adjust the sample until all four verdicts appear. _Requirements: FR-1.2_
 
 ## 10. UI: shell and theme
 
