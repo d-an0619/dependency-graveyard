@@ -8,7 +8,7 @@
       "matcher": "(^|/)src/.*\\.(ts|tsx)$",
       "action": {
         "type": "command",
-        "command": "npx vitest run"
+        "command": "date >> .kiro/hooks/.fired.log; npx vitest run"
       },
       "timeout": 120
     }

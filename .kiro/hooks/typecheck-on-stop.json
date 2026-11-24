@@ -7,7 +7,7 @@
       "trigger": "Stop",
       "action": {
         "type": "command",
-        "command": "npx tsc --noEmit"
+        "command": "date >> .kiro/hooks/.stop-fired.log; npx tsc --noEmit"
       },
       "timeout": 120
     }
