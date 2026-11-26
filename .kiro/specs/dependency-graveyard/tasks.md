@@ -52,8 +52,8 @@
 
 ## 10. UI: shell and theme
 
-- [ ] 10.1 Build the full-viewport spooky scene: night sky gradient, moon, fog layers, fence/tree silhouettes as CSS/SVG; all animations gated behind `prefers-reduced-motion: no-preference`. _Requirements: NFR-3, FR-8.3_
-- [ ] 10.2 Add the display serif + sans font setup and the verdict palette (accent only; shape + label always present). _Requirements: NFR-3, FR-8.2_
+- [x] 10.1 Build the full-viewport spooky scene: night sky gradient, moon, fog layers, fence/tree silhouettes as CSS/SVG; all animations gated behind `prefers-reduced-motion: no-preference`. _Requirements: NFR-3, FR-8.3_
+- [x] 10.2 Add the display serif + sans font setup and the verdict palette (accent only; shape + label always present). _Requirements: NFR-3, FR-8.2_
 
 ## 11. UI: input form
 
