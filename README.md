@@ -15,3 +15,6 @@ Kiroween 2026 해커톤(Devpost, AWS Kiro) 출품작. 카테고리: Costume Cont
 - 2026-10-30 이후 새로 만든 코드만. 기존 코드 가져오면 제출서에 공개.
 - 공개 GitHub 레포 + 오픈소스 라이선스 파일.
 - 3분 미만 YouTube 데모 영상, 동작하는 앱 URL, Kiro 활용 write-up.
+
+## Credits
+- 무덤 타일 아이콘: [game-icons.net](https://game-icons.net), CC BY 3.0. tombstone, ghost, oak by Lorc / fog, dig-hole by Delapouite. (Kiro 생성물 아님, 서드파티 에셋)

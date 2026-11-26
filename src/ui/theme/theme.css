@@ -520,14 +520,18 @@ button.grave:focus-visible {
 .grave--unknown { border-color: rgba( 84, 110, 122, 0.35); background: var(--color-unknown-bg); color: var(--color-unknown); }
 .grave--pending { border-style: dashed; opacity: 0.6; cursor: default; }
 
-/* SVG shape container — sized to hold the ~96px artwork */
+/* Icon container: bone-white silhouette with a verdict-coloured glow */
 .grave__shape {
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  width: 72px;
-  height: 96px;
+  width: 88px;
+  height: 88px;
   flex-shrink: 0;
+}
+
+.grave__shape svg {
+  width: 100%;
+  height: 100%;
+  fill: #e8e2cf;
+  filter: drop-shadow(0 0 8px currentColor);
 }
 
 .grave__name {
