@@ -473,14 +473,16 @@ body {
    ===================================================================== */
 
 .graveyard {
-  max-width: 900px;
+  /* Same max-width and horizontal centring as .paste-form so grid left
+     edge lines up with the form above it. */
+  max-width: 700px;
   margin: 2rem auto 0;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
   gap: 1rem;
 }
 
-/* Individual grave tile */
+/* Individual grave tile — settled graves are <button> elements */
 .grave {
   display: flex;
   flex-direction: column;
@@ -491,22 +493,40 @@ body {
   border: 1px solid rgba(245, 240, 216, 0.1);
   background: rgba(7, 7, 26, 0.55);
   text-align: center;
+  /* Reset button defaults */
+  font-family: inherit;
+  cursor: pointer;
+  transition: transform 0.12s, box-shadow 0.12s;
 }
 
-/* Verdict-tinted border on completed graves */
-.grave--dead    { border-color: rgba(192, 57,  43,  0.35); background: var(--color-dead-bg); }
-.grave--dying   { border-color: rgba(212, 112, 26,  0.35); background: var(--color-dying-bg); }
-.grave--alive   { border-color: rgba( 46, 125, 50,  0.35); background: var(--color-alive-bg); }
-.grave--unknown { border-color: rgba( 84, 110, 122, 0.35); background: var(--color-unknown-bg); }
-.grave--pending { border-style: dashed; opacity: 0.6; }
+button.grave:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+}
 
-/* Placeholder shape box; replaced by SVG in Task 13.1 */
+button.grave:active {
+  transform: translateY(0);
+}
+
+button.grave:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+/* Verdict-tinted border and background on completed graves */
+.grave--dead    { border-color: rgba(192, 57,  43,  0.35); background: var(--color-dead-bg);    color: var(--color-dead);    }
+.grave--dying   { border-color: rgba(212, 112, 26,  0.35); background: var(--color-dying-bg);   color: var(--color-dying);   }
+.grave--alive   { border-color: rgba( 46, 125, 50,  0.35); background: var(--color-alive-bg);   color: var(--color-alive);   }
+.grave--unknown { border-color: rgba( 84, 110, 122, 0.35); background: var(--color-unknown-bg); color: var(--color-unknown); }
+.grave--pending { border-style: dashed; opacity: 0.6; cursor: default; }
+
+/* SVG shape container — sized to hold the ~96px artwork */
 .grave__shape {
-  display: block;
-  width: 48px;
-  height: 56px;
-  border-radius: var(--radius-sm);
-  background: rgba(245, 240, 216, 0.06);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  width: 72px;
+  height: 96px;
   flex-shrink: 0;
 }
 
@@ -534,4 +554,16 @@ body {
   text-transform: none;
   font-weight: 400;
   letter-spacing: 0;
+}
+
+/* Ghost float animation — only when motion is OK (FR-8.3) */
+@keyframes ghost-float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-6px); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .grave--dying .grave__ghost {
+    animation: ghost-float 3s ease-in-out infinite;
+  }
 }

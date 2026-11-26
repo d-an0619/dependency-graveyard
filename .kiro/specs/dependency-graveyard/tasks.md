@@ -68,7 +68,7 @@
 
 ## 13. UI: graveyard, epitaph, summary
 
-- [ ] 13.1 `Grave` tiles as buttons with inline SVG artwork: tombstone (DEAD), ghost (DYING), tree (ALIVE), fog-shrouded mound (UNKNOWN), each with the package name (truncated, title attribute) and a visible text verdict label. _Requirements: FR-5.1, FR-8.1, FR-8.2_
+- [x] 13.1 `Grave` tiles as buttons with inline SVG artwork: tombstone (DEAD), ghost (DYING), tree (ALIVE), fog-shrouded mound (UNKNOWN), each with the package name (truncated, title attribute) and a visible text verdict label. _Requirements: FR-5.1, FR-8.1, FR-8.2_
 - [ ] 13.2 `Epitaph` modal: `role="dialog"` + `aria-modal`, focus moves in on open, Escape closes, focus returns to the triggering grave; content per FR-5.2 (name, installed range, resolved version, latest version, last publish date, vulnerability list with summaries and advisory links, deprecation message, "upgrade available" note, UNKNOWN reason, "vulnerability check unavailable" note when applicable). _Requirements: FR-5.2, FR-5.3, FR-4.3, FR-3.3, FR-2.4_
 - [x] 13.3 `Summary` line: dead and dying counts together, e.g. "7 of 42 dependencies are dead, 12 are dying". _Requirements: FR-6.1_
 
