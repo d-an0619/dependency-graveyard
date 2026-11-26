@@ -11,6 +11,7 @@ import { useCallback, useState } from 'react';
 import { SpookyScene } from './ui/components/SpookyScene';
 import { PasteForm } from './ui/components/PasteForm';
 import { Progress } from './ui/components/Progress';
+import { Summary } from './ui/components/Summary';
 import { Graveyard } from './ui/components/Graveyard';
 import { analyzePackage } from './analyze';
 import { runWithConcurrency } from './io/pool';
@@ -100,6 +101,10 @@ export default function App() {
               <Progress
                 completed={state.completed}
                 total={state.inputs.length}
+              />
+              <Summary
+                reports={state.reports}
+                allDone={state.phase === 'done'}
               />
               <Graveyard
                 inputs={state.inputs}
