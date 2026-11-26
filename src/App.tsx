@@ -1,6 +1,18 @@
+import { useState } from 'react';
 import { SpookyScene } from './ui/components/SpookyScene';
+import { PasteForm } from './ui/components/PasteForm';
+import type { DependencyInput } from './types';
 
 export default function App() {
+  // inputs === null means the form is showing; non-null means analysis was
+  // requested (Tasks 12+ will drive the actual analysis).
+  const [_inputs, setInputs] = useState<DependencyInput[] | null>(null);
+
+  function handleSubmit(inputs: DependencyInput[]) {
+    setInputs(inputs);
+    // Analysis orchestration is wired in Task 12.1.
+  }
+
   return (
     <>
       {/* Full-viewport spooky backdrop (Task 10.1) */}
@@ -20,7 +32,8 @@ export default function App() {
         </header>
 
         <main id="graveyard" style={{ flex: 1, padding: '0 1rem 4rem' }}>
-          {/* PasteForm, Graveyard, etc. rendered by later tasks */}
+          <PasteForm onSubmit={handleSubmit} />
+          {/* Graveyard, Progress, Summary rendered by later tasks */}
         </main>
       </div>
     </>

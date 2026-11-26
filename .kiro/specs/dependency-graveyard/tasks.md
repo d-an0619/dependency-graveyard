@@ -57,8 +57,8 @@
 
 ## 11. UI: input form
 
-- [ ] 11.1 `PasteForm`: labeled monospace textarea, "Dig graves" primary button, "Try an example" secondary button (loads the bundled sample and runs analysis), inline error region (`role="alert"`), and the privacy notice line "package names are sent to npm and OSV; nothing is stored". _Requirements: FR-1.1, FR-1.2, FR-1.3, FR-7.1_
-- [ ] 11.2 Wire parse errors and "no dependencies" errors to the inline region; no analysis runs on error. _Requirements: FR-1.3_
+- [x] 11.1 `PasteForm`: labeled monospace textarea, "Dig graves" primary button, "Try an example" secondary button (loads the bundled sample and runs analysis), inline error region (`role="alert"`), and the privacy notice line "package names are sent to npm and OSV; nothing is stored". _Requirements: FR-1.1, FR-1.2, FR-1.3, FR-7.1_
+- [x] 11.2 Wire parse errors and "no dependencies" errors to the inline region; no analysis runs on error. _Requirements: FR-1.3_
 
 ## 12. UI: orchestration and progress
 

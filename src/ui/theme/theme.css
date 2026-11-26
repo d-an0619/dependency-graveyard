@@ -269,6 +269,146 @@ body {
 }
 
 /* =====================================================================
+   PasteForm — Task 11.1 / 11.2
+   ===================================================================== */
+
+.paste-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.paste-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.paste-form__label {
+  font-size: 1.1rem;
+  color: var(--color-moon);
+  letter-spacing: 0.02em;
+}
+
+.paste-form__label code {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 1em;
+  opacity: 0.9;
+}
+
+.paste-form__textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: #d4cfbf;
+  background: rgba(7, 7, 26, 0.72);
+  border: 1px solid rgba(245, 240, 216, 0.18);
+  border-radius: var(--radius-md);
+  resize: vertical;
+  min-height: 200px;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.paste-form__textarea:focus-visible {
+  outline: none;
+  border-color: rgba(245, 240, 216, 0.5);
+  box-shadow: var(--focus-ring);
+}
+
+.paste-form__textarea[aria-invalid='true'] {
+  border-color: var(--color-dead);
+}
+
+.paste-form__textarea:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.paste-form__textarea::placeholder {
+  color: rgba(212, 207, 191, 0.3);
+}
+
+/* Error alert — hidden when empty, visible when error text is present */
+.paste-form__error {
+  min-height: 1.4em;
+  padding: 0 0.25rem;
+  color: #e57373;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  /* Reserve vertical space to prevent layout shift */
+}
+
+.paste-form__actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.paste-form__btn {
+  padding: 0.6rem 1.4rem;
+  border: none;
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.15s, transform 0.1s, box-shadow 0.15s;
+}
+
+.paste-form__btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.paste-form__btn:not(:disabled):active {
+  transform: translateY(1px);
+}
+
+.paste-form__btn--primary {
+  background: #6b2d2d;
+  color: #f5ece8;
+  border: 1px solid rgba(192, 57, 43, 0.6);
+  box-shadow: 0 2px 8px rgba(192, 57, 43, 0.3);
+}
+
+.paste-form__btn--primary:not(:disabled):hover {
+  background: #7d3535;
+  box-shadow: 0 4px 14px rgba(192, 57, 43, 0.5);
+}
+
+.paste-form__btn--primary:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring), 0 2px 8px rgba(192, 57, 43, 0.3);
+}
+
+.paste-form__btn--secondary {
+  background: rgba(245, 240, 216, 0.08);
+  color: var(--color-moon);
+  border: 1px solid rgba(245, 240, 216, 0.22);
+}
+
+.paste-form__btn--secondary:not(:disabled):hover {
+  background: rgba(245, 240, 216, 0.14);
+  border-color: rgba(245, 240, 216, 0.38);
+}
+
+.paste-form__btn--secondary:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+.paste-form__privacy {
+  font-size: 0.78rem;
+  color: rgba(212, 207, 191, 0.5);
+  font-style: italic;
+}
+
+/* =====================================================================
    App shell layout — content sits above the fixed scene
    ===================================================================== */
 

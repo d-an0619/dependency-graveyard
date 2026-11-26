@@ -8,7 +8,9 @@ export default defineConfig({
   plugins: [react()],
   test: {
     environment: 'jsdom',
+    globals: true,
     include: ['src/**/*.{test,spec}.{ts,tsx}'],
+    setupFiles: ['src/vitest.setup.ts'],
     passWithNoTests: true,
   },
 });
