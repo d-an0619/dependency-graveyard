@@ -419,3 +419,108 @@ body {
   display: flex;
   flex-direction: column;
 }
+
+/* =====================================================================
+   Progress — Task 12.2 (FR-2.5)
+   ===================================================================== */
+
+.progress {
+  max-width: 700px;
+  margin: 1.5rem auto 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.progress__text {
+  font-size: 0.875rem;
+  color: rgba(212, 207, 191, 0.75);
+  font-style: italic;
+}
+
+.progress__bar {
+  width: 100%;
+  height: 6px;
+  background: rgba(245, 240, 216, 0.1);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progress__fill {
+  height: 100%;
+  background: var(--color-dying);
+  border-radius: 3px;
+  transition: width 0.2s ease-out;
+}
+
+.progress__fill[data-done='true'] {
+  background: var(--color-alive);
+}
+
+/* =====================================================================
+   Graveyard grid — Tasks 12.3 / 13.1
+   ===================================================================== */
+
+.graveyard {
+  max-width: 900px;
+  margin: 2rem auto 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 1rem;
+}
+
+/* Individual grave tile */
+.grave {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 1rem 0.75rem 0.75rem;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(245, 240, 216, 0.1);
+  background: rgba(7, 7, 26, 0.55);
+  text-align: center;
+}
+
+/* Verdict-tinted border on completed graves */
+.grave--dead    { border-color: rgba(192, 57,  43,  0.35); background: var(--color-dead-bg); }
+.grave--dying   { border-color: rgba(212, 112, 26,  0.35); background: var(--color-dying-bg); }
+.grave--alive   { border-color: rgba( 46, 125, 50,  0.35); background: var(--color-alive-bg); }
+.grave--unknown { border-color: rgba( 84, 110, 122, 0.35); background: var(--color-unknown-bg); }
+.grave--pending { border-style: dashed; opacity: 0.6; }
+
+/* Placeholder shape box; replaced by SVG in Task 13.1 */
+.grave__shape {
+  display: block;
+  width: 48px;
+  height: 56px;
+  border-radius: var(--radius-sm);
+  background: rgba(245, 240, 216, 0.06);
+  flex-shrink: 0;
+}
+
+.grave__name {
+  font-size: 0.75rem;
+  font-family: 'Courier New', Courier, monospace;
+  color: rgba(212, 207, 191, 0.85);
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: block;
+}
+
+.grave__verdict {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.grave__verdict--pending {
+  color: rgba(212, 207, 191, 0.4);
+  font-style: italic;
+  text-transform: none;
+  font-weight: 400;
+  letter-spacing: 0;
+}

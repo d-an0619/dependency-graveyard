@@ -62,9 +62,9 @@
 
 ## 12. UI: orchestration and progress
 
-- [ ] 12.1 In `App.tsx`, build one `analyzePackage` call per dependency (classify first; unresolvable specifiers make no requests at all) and run them via the pool (6 concurrent). Each grave renders once, when its task completes. _Requirements: FR-2.1, FR-2.2, FR-2.3, FR-3.3_
-- [ ] 12.2 `Progress` live region (`aria-live="polite"`): "12 of 42 checked" counting completed tasks, with a progress bar. _Requirements: FR-2.5_
-- [ ] 12.3 Pending slots render the "digging..." placeholder; after all tasks complete, sort graves DEAD → DYING → UNKNOWN → ALIVE, then alphabetically. _Requirements: FR-2.5, FR-5.1_
+- [x] 12.1 In `App.tsx`, build one `analyzePackage` call per dependency (classify first; unresolvable specifiers make no requests at all) and run them via the pool (6 concurrent). Each grave renders once, when its task completes. _Requirements: FR-2.1, FR-2.2, FR-2.3, FR-3.3_
+- [x] 12.2 `Progress` live region (`aria-live="polite"`): "12 of 42 checked" counting completed tasks, with a progress bar. _Requirements: FR-2.5_
+- [x] 12.3 Pending slots render the "digging..." placeholder; after all tasks complete, sort graves DEAD → DYING → UNKNOWN → ALIVE, then alphabetically. _Requirements: FR-2.5, FR-5.1_
 
 ## 13. UI: graveyard, epitaph, summary
 
